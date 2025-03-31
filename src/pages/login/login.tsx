@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 
 const CLIENT_ID = '617c6261c1e64cb598313397af4c08b1';
-const CLIENT_SECRET = '5c2db882af3d4a56bc366a2f15b08c44';
+const CLIENT_SECRET = '2cca24af01d94f20b7af527c48f7a120';
 const TOKEN_URL = 'https://accounts.spotify.com/api/token';
 
 export async function getSpotifyToken() {

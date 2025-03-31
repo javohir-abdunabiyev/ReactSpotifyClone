@@ -16,7 +16,7 @@ function Home() {
     const token = getSpotifyToken()
     const { fetchData, error, loading } = useApi(import.meta.env.VITE_PUBLIC_API)
     const [reload, setReload] = useContext(ReloadCTX)
-    const [state, dispatch] = useReducer(reducer, [])    
+    const [state, dispatch] = useReducer(reducer, [])
 
     useEffect(() => {
         fetchData("/tracks", method.get, { Authorization: `Bearer ${token}` })
