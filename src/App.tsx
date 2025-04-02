@@ -8,9 +8,9 @@ import Login from './pages/login/login';
 function App() {
   const [reload, setReload] = useState(true);
 
-  let token = localStorage.getItem("access_token")
+  const token = localStorage.getItem("access_token")
 
-  if(!token) {
+  if (!token) {
     location.assign("/src/pages/login/")
   }
 
@@ -20,7 +20,7 @@ function App() {
         <Route path='/' element={<BaseLayout />}>
           <Route index element={<Home />} />
         </Route>
-          <Route path='/src/pages/login' element={<Login />} />
+        <Route path='/src/pages/login' element={<Login />} />
       </Routes>
     </ReloadCTX.Provider>
   )

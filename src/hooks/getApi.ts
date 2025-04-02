@@ -18,7 +18,7 @@ export const useApi = (baseUrl: string) => {
             path: string,
             method: method,
             body?: unknown,
-            headers?: AxiosRequestHeaders
+            headers?: any
         ) => {
             setLoading(true);
             try {
@@ -28,6 +28,8 @@ export const useApi = (baseUrl: string) => {
                     data: body,
                     headers: headers,
                 });
+
+                
 
                 if (res.status !== 200 && res.status !== 201) {
                     throw new Error("Something went wrong");

@@ -6,4 +6,5 @@
 
 body {
     background: #000;
+    overflow-y: hidden;
 }

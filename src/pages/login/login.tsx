@@ -1,52 +1,16 @@
-
 import { Button } from "@/components/ui/button";
-
-const CLIENT_ID = '617c6261c1e64cb598313397af4c08b1';
-const CLIENT_SECRET = '2cca24af01d94f20b7af527c48f7a120';
-const TOKEN_URL = 'https://accounts.spotify.com/api/token';
-
-export async function getSpotifyToken() {
-    const response = await fetch(TOKEN_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-            grant_type: 'client_credentials',
-            client_id: CLIENT_ID,
-            client_secret: CLIENT_SECRET,
-        }),
-    });
-
-    const data = await response.json();
-    return data.access_token;
-}
+import { AUTH_ENDPOINT, REDIRECT_URI } from "@/exports";
 
 function Login() {
-
-    const handleLogin = async () => {
-        try {
-            const accessToken = await getSpotifyToken();
-            localStorage.setItem('access_token', accessToken);
-            console.log("Токен сохранён в localStorage:", accessToken);
-            if (accessToken) {
-                location.assign("/")
-            }
-        } catch (error) {
-            console.error("Ошибка получения токена:", error);
-        }
-    };
-
-
-
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="flex justify-center items-center flex-col gap-[50px]">
                 <h1 className="text-center text-green-400 text-[150px]">Spotify</h1>
-                <Button onClick={handleLogin} className="block mx-auto mt-4 w-[300px] cursor-pointer h-[50px] bg-white text-black font-bold hover:text-white">Log in</Button>
+                <a href={`${AUTH_ENDPOINT}?client_id=${import.meta.env.VITE_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=user-read-private user-read-email user-library-read user-library-modify playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private user-follow-read user-follow-modify user-read-playback-state user-modify-playback-state user-read-currently-playing user-read-recently-played user-top-read streaming`}>
+                    <Button className="block mx-auto mt-4 w-[300px] cursor-pointer h-[50px] bg-white text-black font-bold hover:text-white">Log in</Button>
+                </a>
             </div>
         </div>
-
     );
 }
 
