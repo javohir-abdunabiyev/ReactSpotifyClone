@@ -4,8 +4,13 @@ import "./home.css"
 import TracksFunc from "@/components/custom/tracks";
 import PopularArtists from "@/components/custom/popularArtists";
 
+
+let token = localStorage.getItem("access_token");
+if (!token) {
+    location.assign("/login")
+}
+
 function Home() {
-    let token = localStorage.getItem("access_token");
     const hash = window.location.hash;
     if (!token && hash) {
         const hashParams = hash.slice(1).split('&');

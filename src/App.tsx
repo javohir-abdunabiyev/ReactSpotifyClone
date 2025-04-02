@@ -8,19 +8,13 @@ import Login from './pages/login/login';
 function App() {
   const [reload, setReload] = useState(true);
 
-  const token = localStorage.getItem("access_token")
-
-  if (!token) {
-    location.assign("/src/pages/login/")
-  }
-
   return (
     <ReloadCTX.Provider value={[reload, setReload]}>
       <Routes>
         <Route path='/' element={<BaseLayout />}>
           <Route index element={<Home />} />
         </Route>
-        <Route path='/src/pages/login' element={<Login />} />
+        <Route path='/login' element={<Login />} />
       </Routes>
     </ReloadCTX.Provider>
   )
