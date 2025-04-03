@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import BaseLayout from './layouts/BaseLayout';
 import Home from './pages/home/home';
 import Login from './pages/login/login';
+import UsersTracks from './pages/usersTracks/uTracks';
 function App() {
   const [reload, setReload] = useState(true);
 
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path='/' element={<BaseLayout />}>
           <Route index element={<Home />} />
+          <Route path='/savedTracks' element={<UsersTracks />} />
         </Route>
         <Route path='/login' element={<Login />} />
       </Routes>

@@ -30,7 +30,7 @@ function Home() {
 
     return (
         <>
-            <div>
+            <div className="!pl-[34px] !pt-[12px]">
                 <nav className="flex gap-[8px] !pl-[10px] !mb-[40px]">
                     <Button className="!rounded-[16px] text-black bg-white hover:bg-white !pt-[4px] !pb-[4px] !pl-[12px] !pr-[12px] cursor-pointer">Все</Button>
                     <Button className="!rounded-[16px] bg-[#2c2b2b] !pt-[4px] !pb-[4px] !pl-[12px] !pr-[12px] cursor-pointer">Музыка</Button>

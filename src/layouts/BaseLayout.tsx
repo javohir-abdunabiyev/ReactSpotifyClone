@@ -14,9 +14,10 @@ import { GoPlus } from "react-icons/go";
 import { IoArrowForward } from "react-icons/io5";
 import { tokenCTX } from '@/contexts/token';
 import Player from '@/components/custom/player';
-import UsersTracks from '@/components/custom/usersTracks';
 import { IoIosSearch } from "react-icons/io";
 import TracksDesc from '@/components/custom/tracksDesc';
+import UTracksBtn from '@/components/custom/usersTracks';
+import UsersTracks from '@/pages/usersTracks/uTracks';
 
 const BaseLayout: React.FC = () => {
     const token: string = localStorage.getItem("token") || "";
@@ -31,7 +32,7 @@ const BaseLayout: React.FC = () => {
                             <FaSpotify color='white' size={32} />
                         </div>
                         <div className='flex items-center gap-[8px]'>
-                            <button className='flex justify-center items-center w-[48px] h-[48px] bg-[#1f1f1f] rounded-full'>
+                            <button onClick={() => location.assign("/")} className='flex justify-center items-center w-[48px] h-[48px] bg-[#1f1f1f] rounded-full cursor-pointer'>
                                 <GoHomeFill size={20} color='white' />
                             </button>
                             <Input placeholder='Что хочешь включить?' className='!pl-[15px] bg-[#1f1f1f] text-white w-[474px] h-[48px] rounded-[20px] border-0' />
@@ -60,20 +61,19 @@ const BaseLayout: React.FC = () => {
                                         <IoIosSearch className='cursor-pointer' size={23} color='grey' />
                                         <p className='cursor-pointer text-[#b3b3b3] text-[0.875rem] font-[500]'>Недавно прослушано</p>
                                     </div>
-                                    <UsersTracks />
+                                    <UTracksBtn />
                                 </div>
                             </div>
                         </ResizablePanel>
                         <ResizableHandle className='!cursor-grab bg-black hover:bg-white' />
                         <ResizablePanel>
-                            <main className='bg-[#121212] h-full rounded-[10px] !pt-[12px] !pb-[12px] !pl-[34px]'>
+                            <main className='bg-[#121212] h-full rounded-[10px] !pb-[12px]'>
                                 <Outlet />
                             </main>
                         </ResizablePanel>
                         <ResizableHandle className='!cursor-grab bg-black hover:bg-white' />
                         <ResizablePanel defaultSize={30} className="max-w-[420px] min-w-[200px] !pl-[5px] !pr-[5px] !pt-[0] !pb-[0]">
                             <div className='bg-[#121212] h-full rounded-[10px]'>
-                                <TracksDesc />
                             </div>
                         </ResizablePanel>
                     </ResizablePanelGroup>
