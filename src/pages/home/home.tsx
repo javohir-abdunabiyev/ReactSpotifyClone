@@ -48,6 +48,7 @@ function Home() {
                             <NewReleases />
                             <TracksFunc />
                             <PopularArtists />
+                            <NewReleases />
                             <Footer />
                         </div>
                     </div>

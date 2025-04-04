@@ -53,6 +53,15 @@ function PopularArtists() {
                         <div
                             key={artist.id}
                             className="relative flex-shrink-0 max-w-[177px] w-full h-[225px] !p-[12px] hover:bg-[#2c2b2b] rounded-[4px] cursor-pointer group"
+                            onClick={() => {
+                                const trackData = {
+                                    type: artist.type + "s",
+                                    id: artist.id,
+                                };
+                                setSelectedTrack(trackData);
+                                localStorage.setItem("selectedTrackPage", JSON.stringify(trackData));
+                                window.location.href = `/tracks/${artist.id}`;
+                            }}
                         >
                             <img
                                 src={artist.images[0]?.url}
