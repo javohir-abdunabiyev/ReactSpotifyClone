@@ -31,18 +31,26 @@ function Home() {
 
     return (
         <>
-            <div className="!pl-[34px] !pt-[12px]">
-                <nav className="flex gap-[8px] !pl-[10px] !mb-[40px]">
-                    <Button className="!rounded-[16px] text-black bg-white hover:bg-white !pt-[4px] !pb-[4px] !pl-[12px] !pr-[12px] cursor-pointer">Все</Button>
-                    <Button className="!rounded-[16px] bg-[#2c2b2b] !pt-[4px] !pb-[4px] !pl-[12px] !pr-[12px] cursor-pointer">Музыка</Button>
-                    <Button className="!rounded-[16px] bg-[#2c2b2b] !pt-[4px] !pb-[4px] !pl-[12px] !pr-[12px] cursor-pointer">Подкасты</Button>
-                </nav>
+            <div className="relative">
+                <div className="absolute flex gap-[20px] rounded-t-[10px] w-full h-[220px] bg-[#34295d] !pl-[16px] !pr-[16px] !pt-[40px]">
+                </div>
+                <div className="absolute top-[220px] w-full h-[200px] bg-gradient-to-b from-[#564697]/50 to-[#121212]  !pl-[16px] !pr-[16px]"></div>
 
-                <div className="flex-1 overflow-y-auto no-scrollbar">
-                    <NewReleases />
-                    <TracksFunc />
-                    <PopularArtists />
-                    <Footer />
+                <div className="relative !pl-[34px] !pt-[12px] z-10">
+                    <div>
+                        <nav className="flex gap-[8px] !pl-[10px] !mb-[40px]">
+                            <Button className="!rounded-[16px] text-black bg-white hover:bg-white !pt-[4px] !pb-[4px] !pl-[12px] !pr-[12px] cursor-pointer">Все</Button>
+                            <Button className="!rounded-[16px] bg-[#2c2b2b] !pt-[4px] !pb-[4px] !pl-[12px] !pr-[12px] cursor-pointer">Музыка</Button>
+                            <Button className="!rounded-[16px] bg-[#2c2b2b] !pt-[4px] !pb-[4px] !pl-[12px] !pr-[12px] cursor-pointer">Подкасты</Button>
+                        </nav>
+
+                        <div className="flex-1 overflow-y-auto no-scrollbar">
+                            <NewReleases />
+                            <TracksFunc />
+                            <PopularArtists />
+                            <Footer />
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

@@ -19,8 +19,11 @@ const reducer = (state, action) => {
 }
 
 function UsersTracks() {
-    const { selectedTrack, setSelectedTrack } = useContext(SelectedTrackCTX);
     let token = localStorage.getItem("access_token");
+    if (!token) {
+        location.assign("/login")
+    }
+    const { selectedTrack, setSelectedTrack } = useContext(SelectedTrackCTX);
     const [reload, setReload] = useContext(ReloadCTX)
     const [state, dispatch] = useReducer(reducer, [])
     useEffect(() => {

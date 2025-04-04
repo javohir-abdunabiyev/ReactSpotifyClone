@@ -18,9 +18,12 @@ const reducer = (state, action) => {
 };
 
 function Tracks() {
+    let token = localStorage.getItem("access_token");
+    if (!token) {
+        location.assign("/login")
+    }
     const selectedTrackPage = JSON.parse(localStorage.getItem("selectedTrackPage") || "{}");
     const { type, id } = selectedTrackPage;
-    let token = localStorage.getItem("access_token");
     const [reload, setReload] = useContext(ReloadCTX);
     const [state, dispatch] = useReducer(reducer, []);
 
