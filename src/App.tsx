@@ -6,8 +6,10 @@ import BaseLayout from './layouts/BaseLayout';
 import Home from './pages/home/home';
 import Login from './pages/login/login';
 import UsersTracks from './pages/usersTracks/uTracks';
+import Tracks from './pages/tracks/tracks';
 function App() {
   const [reload, setReload] = useState(true);
+  
 
   return (
     <ReloadCTX.Provider value={[reload, setReload]}>
@@ -15,6 +17,7 @@ function App() {
         <Route path='/' element={<BaseLayout />}>
           <Route index element={<Home />} />
           <Route path='/savedTracks' element={<UsersTracks />} />
+          <Route path='/tracks/:id' element={<Tracks />} />
         </Route>
         <Route path='/login' element={<Login />} />
       </Routes>

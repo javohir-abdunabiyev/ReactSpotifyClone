@@ -3,14 +3,15 @@ import NewReleases from "@/components/custom/newReleases";
 import "./home.css"
 import TracksFunc from "@/components/custom/tracks";
 import PopularArtists from "@/components/custom/popularArtists";
+import Footer from "@/components/custom/footer";
 
 
-let token = localStorage.getItem("access_token");
-if (!token) {
-    location.assign("/login")
-}
 
 function Home() {
+    let token = localStorage.getItem("access_token");
+    if (!token) {
+        location.assign("/login")
+    }
     const hash = window.location.hash;
     if (!token && hash) {
         const hashParams = hash.slice(1).split('&');
@@ -37,10 +38,11 @@ function Home() {
                     <Button className="!rounded-[16px] bg-[#2c2b2b] !pt-[4px] !pb-[4px] !pl-[12px] !pr-[12px] cursor-pointer">Подкасты</Button>
                 </nav>
 
-                <div className="max-h-[490px] overflow-y-scroll no-scrollbar">
+                <div className="flex-1 overflow-y-auto no-scrollbar">
                     <NewReleases />
                     <TracksFunc />
                     <PopularArtists />
+                    <Footer />
                 </div>
             </div>
         </>

@@ -1,14 +1,13 @@
 import { useContext, useEffect, useReducer } from "react";
 import { ReloadCTX } from "@/contexts/reload";
 import { FaHeart, FaPlay } from "react-icons/fa";
-import UsersData from "@/components/custom/usersData";
 import { Button } from "@/components/ui/button";
 import { TfiMenuAlt } from "react-icons/tfi";
 import { CiClock2 } from "react-icons/ci";
-import "./uTracks.css"
 import NewReleases from "@/components/custom/newReleases";
 import Footer from "@/components/custom/footer";
-import { SelectedTrackCTX } from "@/contexts/selectedTrack";
+
+
 const reducer = (state, action) => {
     switch (action.type) {
         case "get":
@@ -16,25 +15,27 @@ const reducer = (state, action) => {
         default:
             return state;
     }
-}
+};
 
-function UsersTracks() {
-    const { selectedTrack, setSelectedTrack } = useContext(SelectedTrackCTX);
+function Tracks() {
+    const selectedTrackPage = JSON.parse(localStorage.getItem("selectedTrackPage") || "{}");
+    const { type, id } = selectedTrackPage;
     let token = localStorage.getItem("access_token");
-    const [reload, setReload] = useContext(ReloadCTX)
-    const [state, dispatch] = useReducer(reducer, [])
+    const [reload, setReload] = useContext(ReloadCTX);
+    const [state, dispatch] = useReducer(reducer, []);
+
     useEffect(() => {
         const getArtistsAlbums = async () => {
             try {
-                const response = await fetch(import.meta.env.VITE_PUBLIC_API + "/me/tracks", {
+                const response = await fetch(import.meta.env.VITE_PUBLIC_API + `/${type}/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
 
                 const data = await response.json();
-                console.log(data.items);
-                dispatch({ type: "get", payload: data.items })
+                console.log(data);
+                dispatch({ type: "get", payload: data });
 
             } catch (err) {
                 console.error(err);
@@ -44,8 +45,6 @@ function UsersTracks() {
         getArtistsAlbums();
     }, [reload]);
 
-
-
     return (
         <>
             <div className="relative overflow-y-scroll h-full no-scrollbar">
@@ -53,8 +52,8 @@ function UsersTracks() {
                     <div className="relative max-w-[166px] max-h-[166px]">
                         <img
                             draggable={false}
-                            src="https://img.freepik.com/free-vector/polygonal-background_53876-60251.jpg"
-                            alt=""
+                            src={state?.images?.[0]?.url}
+                            alt="Album Cover"
                             className="max-w-[166px] max-h-[166px] rounded-[4px]"
                         />
                         <FaHeart className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" color="white" size={50} />
@@ -62,10 +61,10 @@ function UsersTracks() {
 
                     <div className="flex items-end !mb-[12px]">
                         <div>
-                            <p className="font-[500] text-white text-[0.875rem]">Плейлист</p>
-                            <h1 className="text-[3rem] font-[700] text-white">Любимые треки</h1>
+                            <p className="font-[500] text-white text-[0.875rem]">Альбом</p>
+                            <h1 className="text-[2.7rem] font-[700] text-white">{state.name}</h1>
                             <div>
-                                <UsersData />
+                                <p className="text-[#ffffffb2] text-[1.125rem] font-[500]">{state?.artists?.[0]?.name}</p>
                             </div>
                         </div>
                     </div>
@@ -89,27 +88,18 @@ function UsersTracks() {
                         <CiClock2 size={18} className="text-[#ffffffb2] max-w-[120px] w-full" />
                     </div>
                     {
-
-                        state.map((uTrack: any) => (
-                            <div onClick={() => {
-                                const trackData = {
-                                    type: uTrack.track.type + "s",
-                                    id: uTrack.track.id,
-                                };
-                                setSelectedTrack(trackData);
-                                localStorage.setItem("selectedTrack", JSON.stringify(trackData));
-                            }} key={uTrack.track.id} className="flex items-center w-full cursor-pointer !p-[4px] !pl-[15px] rounded-[6px] hover:bg-[#2c2c2c] gap-[15px]">
+                        state?.tracks?.items?.map((uTrack: any) => (
+                            <div key={uTrack.id} className="flex items-center w-full cursor-pointer !p-[4px] !pl-[15px] rounded-[6px] hover:bg-[#2c2c2c] gap-[15px]">
                                 <div className="flex items-center gap-[15px] max-w-[315px] w-full">
                                     <FaPlay color="white" />
-                                    <img className="w-[38px] h-[38px] rounded-[4px]" src={uTrack.track.album.images[0].url} alt="img" />
                                     <div>
-                                        <p className="text-white text-[16px] w-34 truncate">{uTrack.track.name}</p>
-                                        <p className="text-[#b3b3b3] text-[14px] font-[500] w-34 truncate">{uTrack.track.artists[0].name}</p>
+                                        <p className="text-white text-[16px] w-34 truncate">{uTrack.name}</p>
+                                        <p className="text-[#b3b3b3] text-[14px] font-[500] w-34 truncate">{uTrack.artists[0].name}</p>
                                     </div>
                                 </div>
-                                <p className="text-[#b3b3b3] text-[14px] font-[500] w-34 truncate max-w-[167px] w-full">{uTrack.track.album.name}</p>
+                                <p className="text-[#b3b3b3] text-[14px] font-[500] w-34 truncate max-w-[167px] w-full">{uTrack.name}</p>
                                 <p className="text-[#b3b3b3] text-[14px] font-[500] w-34 truncate text-center">
-                                    {Math.floor(uTrack.track.duration_ms / 60000)}:{((uTrack.track.duration_ms % 60000) / 1000).toFixed(0).padStart(2, "0")}
+                                    {Math.floor(uTrack.duration_ms / 60000)}:{((uTrack.duration_ms % 60000) / 1000).toFixed(0).padStart(2, "0")}
                                 </p>
                             </div>
                         ))
@@ -121,7 +111,7 @@ function UsersTracks() {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export default UsersTracks;
+export default Tracks;

@@ -2,8 +2,7 @@ import { useContext, useEffect, useReducer, useState } from "react";
 import { ReloadCTX } from "@/contexts/reload";
 import { Button } from "../ui/button";
 import { FaPlay } from "react-icons/fa";
-import TracksDesc from "./tracksDesc";
-
+import { SelectedTrackCTX } from "@/contexts/selectedTrack";
 const reducer = (state, action) => {
     switch (action.type) {
         case "get":
@@ -14,12 +13,10 @@ const reducer = (state, action) => {
 };
 
 function NewReleases() {
-    let token = localStorage.getItem("access_token");
     const [reload, setReload] = useContext(ReloadCTX);
+    const { selectedTrack, setSelectedTrack } = useContext(SelectedTrackCTX);
     const [state, dispatch] = useReducer(reducer, []);
-    const [selectedTrack, setSelectedTrack] = useState(
-        () => JSON.parse(localStorage.getItem("selectedTrack") || "null")
-    );
+    const token = localStorage.getItem("access_token");
 
     useEffect(() => {
         const getAlbums = async () => {
@@ -50,6 +47,15 @@ function NewReleases() {
                     <div
                         key={album.id}
                         className="relative flex-shrink-0 max-w-[177px] w-full h-[240px] !p-[12px] hover:bg-[#2c2b2b] rounded-[4px] cursor-pointer group"
+                        onClick={() => {
+                            const trackData = {
+                                type: album.type + "s",
+                                id: album.id,
+                            };
+                            setSelectedTrack(trackData);
+                            localStorage.setItem("selectedTrackPage", JSON.stringify(trackData));
+                            window.location.href = `/tracks/${album.id}`;
+                        }}
                     >
                         <img
                             src={album.images[0]?.url}
@@ -59,7 +65,8 @@ function NewReleases() {
                         <Button
                             className="absolute rounded-full w-[48px] h-[48px] bg-[#1ed760] right-[20px] bottom-[80px] 
                             opacity-0 translate-y-2 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:translate-y-0 cursor-pointer hover:bg-[#79dc9c] hover:w-[50px] hover:h-[50px]"
-                            onClick={() => {
+                            onClick={(e) => {
+                                e.stopPropagation()
                                 const trackData = {
                                     type: album.type + "s",
                                     id: album.id,
@@ -76,9 +83,9 @@ function NewReleases() {
                 ))}
             </div>
 
-            {selectedTrack && <TracksDesc type={selectedTrack.type} id={selectedTrack.id} />}
         </div>
     );
 }
+
 
 export default NewReleases;
