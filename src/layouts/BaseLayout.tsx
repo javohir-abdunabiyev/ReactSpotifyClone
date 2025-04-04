@@ -83,8 +83,8 @@ const BaseLayout: React.FC = () => {
                             </ResizablePanel>
                         </ResizablePanelGroup>
                     </div>
-                    <div className='w-full h-[72px]'>
-                        <Player />
+                    <div className='w-full'>
+                        <Player type={selectedTrack?.type} id={selectedTrack?.id} />
                     </div>
                 </div>
             </SelectedTrackCTX.Provider>

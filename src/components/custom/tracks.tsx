@@ -2,7 +2,6 @@ import { useContext, useEffect, useReducer, useState } from "react";
 import { ReloadCTX } from "@/contexts/reload";
 import { Button } from "../ui/button";
 import { FaPlay } from "react-icons/fa";
-import TracksDesc from "./tracksDesc";
 import { SelectedTrackCTX } from "@/contexts/selectedTrack";
 
 const reducer = (state, action) => {
@@ -49,6 +48,15 @@ function TracksFunc() {
                     <div
                         key={album.id}
                         className="relative group flex-shrink-0 max-w-[177px] w-full h-[240px] !p-[12px] hover:bg-[#2c2b2b] rounded-[4px] cursor-pointer"
+                        onClick={() => {
+                            const trackData = {
+                                type: album.type + "s",
+                                id: album.id,
+                            };
+                            setSelectedTrack(trackData);
+                            localStorage.setItem("selectedTrackPage", JSON.stringify(trackData));
+                            window.location.href = `/tracks/${album.id}`;
+                        }}
                     >
                         <img
                             src={album.images[0]?.url}
